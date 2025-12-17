@@ -1,0 +1,11 @@
+# 1. En Önemlisi: Şifreler
+.env
+
+# 2. Sanal Ortam (Burası 100MB+ gereksiz dosya doludur, yüklenmez)
+venv/
+
+# 3. Python Ön Bellek Dosyaları (Gereksiz)
+__pycache__/
+
+# 4. İşletim Sistemi Dosyaları
+.DS_Store
