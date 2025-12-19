@@ -8,7 +8,7 @@ import google.generativeai as genai
 from tavily import TavilyClient
 
 # Ayarlar
-from config import TARGET_URLS, SYSTEM_PROMPT
+from config import TARGET_URLS, LINKEDIN_QUERIES, SYSTEM_PROMPT
 
 load_dotenv()
 
@@ -61,7 +61,7 @@ def extract_events_with_ai(text_content, source_url):
 # --- MODÜL 1: DOĞRUDAN KAZIMA (SCRAPING) ---
 def run_scraping():
     found = []
-    print("\n--- Siteler Taranıyor (Meetup/Kommunity/Coderspace/Luma) ---")
+    print("\n--- Siteler Taranıyor (Meetup/Luma) ---")
     for url in TARGET_URLS:
         print(f"📡 Bağlanılıyor: {url}...")
         try:
@@ -77,21 +77,39 @@ def run_scraping():
     return found
 
 # --- MODÜL 2: ARAMA MOTORU (LINKEDIN) ---
+def run_search():
+    found = []
+    print("\n--- 🔍 ARAMA MOTORU (LinkedIn Posts) ---")
+    for query in LINKEDIN_QUERIES:
+        print(f"🔎 Tavily Soruluyor: {query[:40]}...")
+        try:
+            # max_results=5 yeterli, test için çok harcama
+            res = tavily_client.search(query, max_results=5)
+            results = res.get('results', [])
+            print(f"   🔹 {len(results)} sonuç geldi, analiz ediliyor...")
+            
+            for item in results:
+                print(f"   👀 Okunuyor: {item['title'][:40]}...")
+                events = extract_events_with_ai(item['content'], item['url'])
+                if events: found.extend(events)
+                time.sleep(1)
+        except Exception as e:
+            print(f"❌ Tavily Hatası: {e}")
+    return found
 
 
 # --- ANA MOTOR ---
 def run_agent():
     today_display = datetime.date.today().strftime("%d.%m.%Y")
     print(f"🤖 TECH EVENT AI BAŞLATILIYOR... [Tarih: {today_display}]\n")
-    
-    all_events = []
-    seen = set()
 
     # 1. Verileri Topla
-    raw_list = run_scraping()
-    # linkedin ekleyince run_scraping() + run_search()
+    raw_list = run_scraping()+ run_search()
 
     print(f"\n🧹 TEMİZLİK BAŞLIYOR... (Ham Veri: {len(raw_list)})")
+
+    all_events = []
+    seen = set()
 
     # --- FİLTRELEME ---
     for ev in raw_list:

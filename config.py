@@ -7,13 +7,15 @@ date = start_date.strftime("%Y-%m-%d")
 
 # 1. SCRAPING HEDEFLERİ
 TARGET_URLS = [
-    "https://www.meetup.com/find/?location=tr--Istanbul&source=EVENTS&categoryId=546", 
-    "https://kommunity.com/explore/events"
-    "https://coderspace.io/etkinlikler",
+    "https://www.meetup.com/find/?location=tr--Istanbul&source=EVENTS&categoryId=546",
     "https://lu.ma/istanbul"
 ]
 
 # 2. ARAMA HEDEFİ LINKEDIN (EKLENECEK)
+LINKEDIN_QUERIES = [
+    # Strateji: "Post" (Gönderi) arayarak AuthWall'u aşmak.
+    f'site:linkedin.com/posts ("başvurular açıldı" OR "katıl" OR "başvur" OR "kayıt" OR "register") ("İstanbul" OR "online") AND ("yapay zeka" OR "ai" OR "veri" OR "software" OR "cloud") AND ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days") after:{date}'
+]
 
 # prompt
 SYSTEM_PROMPT = """
@@ -35,9 +37,11 @@ DİĞER KURALLAR:
    - "Maslak", "Levent", "Şişli", "Kadıköy", "Beşiktaş" -> location: "Istanbul"
    - "Secret Location" (Luma) -> location: "Istanbul"
    
-2. KONU: Sadece Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days" ).
+2. KONU: Sadece Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days").
 
 MUTLAKA geçmiş bir etkinlik olmamalı. Başvuru tarihi geçmişse ELE veya etkinlik bitmişse ELE.
+
+LİNKEDİN ÖZEL: Post metninde geçen başvuru linkini bulmaya çalış. Link yoksa postun linkini koy.
 
 Çıktı Formatı (JSON Listesi):
 [
