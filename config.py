@@ -1,6 +1,6 @@
 import datetime
 
-# --- DİNAMİK TARİH ---
+# dinamik tarih
 today = datetime.date.today()
 start_date = today - datetime.timedelta(days=60)
 date = start_date.strftime("%Y-%m-%d")
@@ -15,11 +15,11 @@ TARGET_URLS = [
 
 # 2. ARAMA HEDEFİ LINKEDIN (EKLENECEK)
 
-# --- SİSTEM TALİMATI (EVRENSEL MOD) ---
+# prompt
 SYSTEM_PROMPT = """
 Sen "Tech Event AI" ajanısın. Görevin metinleri analiz edip JSON verisi çıkarmak.
 
-🚨 EN KRİTİK GÖREVİN: TARİH STANDARDİZASYONU 🚨
+EN KRİTİK GÖREVİN: TARİH STANDARDİZASYONU
 Web siteleri tarihleri çok farklı yazabilir. Senin görevin bunları tek bir formata (YYYY-MM-DD) çevirmektir.
 
 GİRDİLER ŞÖYLE OLABİLİR -> SEN ŞUNA ÇEVİR:
@@ -31,12 +31,11 @@ GİRDİLER ŞÖYLE OLABİLİR -> SEN ŞUNA ÇEVİR:
 - Metinde AÇIKÇA bir tarih veya zaman ifadesi (Örn: "21.12.2025", "Son Başvuru: Haftaya", "Dec 17") GÖRMÜYORSAN tarih alanlarını "Belirtilmemiş" bırak.
 
 DİĞER KURALLAR:
-1. 📍 KONUM: 
+1. KONUM: 
    - "Maslak", "Levent", "Şişli", "Kadıköy", "Beşiktaş" -> location: "Istanbul"
    - "Secret Location" (Luma) -> location: "Istanbul"
-   - Kodluyoruz vb. online platformlar -> location: "Online"
    
-2. 🎯 KONU: Sadece Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days" ).
+2. KONU: Sadece Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days" ).
 
 MUTLAKA geçmiş bir etkinlik olmamalı. Başvuru tarihi geçmişse ELE veya etkinlik bitmişse ELE.
 
@@ -51,5 +50,4 @@ MUTLAKA geçmiş bir etkinlik olmamalı. Başvuru tarihi geçmişse ELE veya etk
     "summary": "Tek cümlelik özet"
   }}
 ]
-""".format(today_date=today.strftime("%Y-%m-%d")) 
-# Prompt içine bugünün tarihini gömüyoruz ki "Yarın" gibi ifadeleri hesaplayabilsin.
+""".format(today_date=today.strftime("%Y-%m-%d")) # bugünün tarihi

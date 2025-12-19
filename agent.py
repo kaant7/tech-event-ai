@@ -3,7 +3,6 @@ import json
 import time
 import requests
 import datetime
-import warnings
 from dotenv import load_dotenv
 import google.generativeai as genai
 from tavily import TavilyClient
@@ -12,7 +11,6 @@ from tavily import TavilyClient
 from config import TARGET_URLS, SYSTEM_PROMPT
 
 load_dotenv()
-warnings.filterwarnings("ignore")
 
 # API Kurulumları
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -75,7 +73,7 @@ def run_scraping():
                     found.extend(events)
             time.sleep(2)
         except Exception as e:
-            print(f"❌ Hata: {e}")
+            print(f"Hata: {e}")
     return found
 
 # --- MODÜL 2: ARAMA MOTORU (LINKEDIN) ---
@@ -95,7 +93,7 @@ def run_agent():
 
     print(f"\n🧹 TEMİZLİK BAŞLIYOR... (Ham Veri: {len(raw_list)})")
 
-    # --- ACIMASIZ FİLTRELEME ---
+    # --- FİLTRELEME ---
     for ev in raw_list:
         title = ev.get('title', 'Bilinmiyor')
         e_date = ev.get('event_date')
@@ -120,7 +118,6 @@ def run_agent():
             continue
 
         # KURAL C: İkisi de YOKSA (Belirtilmemiş) -> SİL (Çöp Veri)
-        # Kodluyoruz'un genel sayfaları burada elenecek.
         if e_status is None and d_status is None:
             print(f"   🗑️ SİLİNDİ (Tarih Bulunamadı): {title} -> AI Tarihi: '{e_date}' olarak görmüş.")
             continue
