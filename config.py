@@ -13,8 +13,14 @@ TARGET_URLS = [
 
 # 2. ARAMA HEDEFİ LINKEDIN (EKLENECEK)
 LINKEDIN_QUERIES = [
-    # Strateji: "Post" (Gönderi) arayarak AuthWall'u aşmak.
-    f'site:linkedin.com/posts ("başvurular açıldı" OR "katıl" OR "başvur" OR "kayıt" OR "register") ("İstanbul" OR "online") AND ("yapay zeka" OR "ai" OR "veri" OR "software" OR "cloud") AND ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days") after:{date}'
+    # 1. Sorgu: Genel AI ve Yazılım Etkinlikleri
+    'site:linkedin.com/posts "istanbul" ("yapay zeka" OR "ai" OR "software") ("etkinlik" OR "meetup") "katıl"',
+    
+    # 2. Sorgu: Spesifik "Başvur" odaklı postlar
+    'site:linkedin.com/posts "istanbul" ("veri" OR "cloud" OR "yazılım") "başvurular açıldı"',
+    
+    # 3. Sorgu: Online ve Global Fırsatlar
+    'site:linkedin.com/posts "online" ("webinar" OR "bootcamp" OR "hackathon") "register" "turkey"'
 ]
 
 # prompt
@@ -37,18 +43,19 @@ DİĞER KURALLAR:
    - "Maslak", "Levent", "Şişli", "Kadıköy", "Beşiktaş" -> location: "Istanbul"
    - "Secret Location" (Luma) -> location: "Istanbul"
    
-2. KONU: Sadece Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days").
+2. KONU: Meetup ve Luma'da sadece bunları ara: Yazılım, AI, Veri, Teknoloji, Cloud alanlarında ("meetup" OR "summit" OR "atölye" OR "eğitim" OR "etkinlik" OR "community day" OR "community talks OR "career talks" OR "career days").
+
+3. LİNK: Luma linkleri "https://lu.ma/istanbul" değil, örnek olarak "https://luma.com/istanbul?e=evt-8sqOnK0iDXYTRCN" veya "https://luma.com/zhwylll0" şeklinde etkinlik özelinde linkler olmalı. Tüm etkinliklerin olduğu sayfanın linki değil.
 
 MUTLAKA geçmiş bir etkinlik olmamalı. Başvuru tarihi geçmişse ELE veya etkinlik bitmişse ELE.
 
-LİNKEDİN ÖZEL: Post metninde geçen başvuru linkini bulmaya çalış. Link yoksa postun linkini koy.
+LİNKEDİN ÖZEL: Başvuru linki değil, bulduğun postun linkini koy. Postun dili Türkçe olsun.
 
 Çıktı Formatı (JSON Listesi):
 [
   {{
     "title": "Etkinlik Adı",
     "event_date": "YYYY-MM-DD (Kesinlikle bu format)",
-    "deadline": "YYYY-MM-DD (Kesinlikle bu format - Yoksa 'Belirtilmemiş')",
     "link": "URL",
     "location": "Istanbul veya Online",
     "summary": "Tek cümlelik özet"

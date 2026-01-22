@@ -84,7 +84,7 @@ def run_search():
         print(f"🔎 Tavily Soruluyor: {query[:40]}...")
         try:
             # max_results=5 yeterli, test için çok harcama
-            res = tavily_client.search(query, max_results=5)
+            res = tavily_client.search(query, search_depth="advanced", max_results=7)
             results = res.get('results', [])
             print(f"   🔹 {len(results)} sonuç geldi, analiz ediliyor...")
             
@@ -154,8 +154,8 @@ def run_agent():
     print(f"\n🚀 TARAMA BİTTİ! TOPLAM {len(all_events)} EVENT:\n")
     for opp in all_events:
         print(f"📌 {opp['title']}")
-        print(f"📅 Tarih: {opp.get('event_date')} | ⏳ Son Başvuru: {opp.get('deadline')}")
-        print(f"📍 {opp.get('location')}")
+        print(f"❓ {opp.get('summary')}")
+        print(f"📍 {opp.get('location')} | 📅 Tarih: {opp.get('event_date')}")
         print(f"🔗 {opp['link']}")
         print("---")
 
