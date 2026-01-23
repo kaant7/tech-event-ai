@@ -16,7 +16,7 @@ load_dotenv()
 # API Kurulumları
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-model = genai.GenerativeModel('gemma-3-27b-it')
+model = genai.GenerativeModel('gemma-3-27b')
 
 # --- TELEGRAM AYARLARI (YENİ EKLENDİ) ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -90,7 +90,7 @@ def run_scraping():
     for url in TARGET_URLS:
         print(f"📡 Bağlanılıyor: {url}...")
         try:
-            resp = requests.get(f"https://r.jina.ai/{url}", timeout=30)
+            resp = requests.get(f"https://r.jina.ai/{url}", timeout=60)
             if resp.status_code == 200:
                 events = extract_events_with_ai(resp.text, url)
                 if events:
