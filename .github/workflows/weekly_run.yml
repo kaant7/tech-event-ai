@@ -38,5 +38,5 @@ jobs:
           git config --global user.name "TechEventBot"
           git config --global user.email "bot@techevent.com"
           git add history.json
-          git commit -m "🤖 Bot: Haftalık hafıza güncellendi" || echo "Değişiklik yok."
+          git commit -m "GitHub Bot: Haftalık hafıza güncellendi" || echo "Değişiklik yok."
           git push
