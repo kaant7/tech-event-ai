@@ -119,5 +119,3 @@ Bu proje [MIT License](https://www.google.com/search?q=LICENSE) altında lisansl
 
 **Geliştirici:** [Kaan Efe Taş](https://www.google.com/search?q=https://github.com/kaant7)
 *Computer Engineering Student @ Istanbul Bilgi University*
-```
-```
