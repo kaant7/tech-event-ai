@@ -5,7 +5,7 @@
 ![GitHub Actions](https://img.shields.io/badge/Automation-GitHub%20Actions-2088FF?logo=github-actions&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Notification-Telegram-2CA5E0?logo=telegram&logoColor=white)
 
-**Tech Event AI**, İstanbul'daki teknoloji, yazılım ve yapay zeka etkinliklerini (Meetup, Luma, LinkedIn) tarayan, **Google Gemma 3 (27B)** yapay zeka modelini kullanarak analiz eden ve en güncel fırsatları **Telegram** üzerinden bildiren tam otomatik bir ajandır.
+**Tech Event AI**, İstanbul'daki teknoloji, yazılım, veri bilimi ve yapay zeka etkinliklerini (Meetup, Luma, LinkedIn) tarayan, **Google Gemma 3 (27B)** yapay zeka modelini kullanarak analiz eden ve en güncel fırsatları **Telegram** üzerinden bildiren tam otomatik bir ajandır.
 
 ## 🚀 Proje Hakkında
 
