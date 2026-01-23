@@ -113,38 +113,25 @@ def run_agent():
 
     # --- FİLTRELEME ---
     for ev in raw_list:
-        title = ev.get('title', 'Bilinmiyor')
+        title = ev.get('title', 'Bilinmiyor').strip()
         e_date = ev.get('event_date')
-        d_date = ev.get('deadline')
-        
-        # 1. Mükerrer Kontrolü
+        link = ev.get('link', '').strip() # Linki temizle
+        loc = ev.get('location', 'Other').lower()
+
+        # 1. Tekrarlanma Kontrolü
         if title in seen: continue
 
-        # 2. Tarih Durumlarını Analiz Et
-        # (True: Gelecek, False: Geçmiş, None: Yok)
+        # 2. KONUM KONTROLÜ (Sadece İstanbul - Online İstemiyoruz) 🏙️
+        # Eski Kod: if "istanbul" not in loc and "online" not in loc:
+        # Yeni Kod: Sadece içinde "istanbul" geçenleri al.
+        if "istanbul" not in loc:
+            # print(f"   🗑️ SİLİNDİ (Fiziksel Değil): {title} -> {loc}")
+            continue
+
+        # 3. TARİH KONTROLÜ
         e_status = check_date_status(e_date)
-        d_status = check_date_status(d_date)
-
-        # KURAL A: Eğer tarihi net olarak GEÇMİŞSE -> SİL
-        if e_status is False:
-            print(f"   🗑️ SİLİNDİ (Geçmiş Tarih): {title} -> Tarih: {e_date}")
-            continue
-        
-        # KURAL B: Eğer deadline net olarak GEÇMİŞSE -> SİL
-        if d_status is False:
-            print(f"   🗑️ SİLİNDİ (Başvuru Bitmiş): {title} -> Deadline: {d_date}")
-            continue
-
-        # KURAL C: İkisi de YOKSA (Belirtilmemiş) -> SİL (Çöp Veri)
-        if e_status is None and d_status is None:
-            print(f"   🗑️ SİLİNDİ (Tarih Bulunamadı): {title} -> AI Tarihi: '{e_date}' olarak görmüş.")
-            continue
-
-        # 3. Konum Kontrolü
-        loc = ev.get('location', 'Other').lower()
-        if "istanbul" not in loc and "online" not in loc:
-            print(f"   🗑️ SİLİNDİ (Konum Uymadı): {title} -> Konum: {loc}")
-            continue
+        if e_status is False: continue # Geçmiş
+        if e_status is None: continue  # Tarihsiz
 
         # Validasyon geçti!
         all_events.append(ev)
