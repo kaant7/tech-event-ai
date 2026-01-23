@@ -1,0 +1,42 @@
+name: Weekly Tech Event Agent
+
+on:
+  schedule:
+    # Her Pazartesi sabahı Türkiye saatiyle 09:00'da çalışır
+    # (UTC saatiyle 06:00)
+    # 0=Pazar, 1=Pazartesi, ...
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # İstediğin zaman "Run workflow" butonuyla elle de çalıştırabilirsin
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodları Çek (Checkout)
+        uses: actions/checkout@v3
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          pip install requests python-dotenv google-generativeai tavily-python
+
+      - name: Ajanı Çalıştır 🕵️‍♂️
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python agent.py
+
+      - name: Hafızayı Kaydet (History Update) 🧠
+        run: |
+          git config --global user.name "TechEventBot"
+          git config --global user.email "bot@techevent.com"
+          git add history.json
+          git commit -m "🤖 Bot: Haftalık hafıza güncellendi" || echo "Değişiklik yok."
+          git push
