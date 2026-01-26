@@ -1,9 +1,9 @@
 name: Weekly Tech Event Agent
 
 on:
-  workflow_dispatch: # Manuel çalıştırma butonu kalsın
+  workflow_dispatch: 
   schedule:
-    - cron: '38 19 * * *' # Her Pazartesi, UTC 06:00 (TR saatiyle 09:00)
+    - cron: '50 19 * * *' 
 
 jobs:
   run-agent:
@@ -22,7 +22,7 @@ jobs:
         run: |
           pip install requests python-dotenv google-generativeai tavily-python
 
-      - name: Ajanı Çalıştır 🕵️‍♂️
+      - name: Ajanı Çalıştır 
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
@@ -30,7 +30,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python agent.py
 
-      - name: Hafızayı Kaydet (History Update) 🧠
+      - name: Hafızayı Kaydet (History Update) 
         run: |
           git config --global user.name "TechEventBot"
           git config --global user.email "bot@techevent.com"
