@@ -1,12 +1,9 @@
 name: Weekly Tech Event Agent
 
 on:
+  workflow_dispatch: # Manuel çalıştırma butonu kalsın
   schedule:
-    # Her Pazartesi sabahı Türkiye saatiyle 09:00'da çalışır
-    # (UTC saatiyle 06:00)
-    # 0=Pazar, 1=Pazartesi, ...
-    - cron: '0 6 * * 1'
-  workflow_dispatch: # İstediğin zaman "Run workflow" butonuyla elle de çalıştırabilirsin
+    - cron: '38 19 * * *' # Her Pazartesi, UTC 06:00 (TR saatiyle 09:00)
 
 jobs:
   run-agent:
