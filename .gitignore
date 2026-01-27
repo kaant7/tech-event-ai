@@ -9,6 +9,3 @@ __pycache__/
 
 # 4. İşletim Sistemi Dosyaları
 .DS_Store
-
-# 5. History 
-history.json

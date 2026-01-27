@@ -3,7 +3,7 @@ name: Weekly Tech Event Agent
 on:
   workflow_dispatch: 
   schedule:
-    - cron: '0 15 * * *' 
+    - cron: '0 16 * * *' 
 
 jobs:
   run-agent:
