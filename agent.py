@@ -16,7 +16,7 @@ load_dotenv()
 # API Kurulumları
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-model = genai.GenerativeModel('gemma-2.5-flash-lite')
+model = genai.GenerativeModel('gemma-3-27b-it')
 
 # --- TELEGRAM AYARLARI (YENİ EKLENDİ) ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
