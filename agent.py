@@ -96,7 +96,7 @@ def run_scraping():
                 if events:
                     print(f"   ✨ {len(events)} ham veri çekildi.")
                     found.extend(events)
-            time.sleep(2)
+            time.sleep(30) # rate limiti korumak için
         except Exception as e:
             print(f"Hata: {e}")
     return found
@@ -113,10 +113,9 @@ def run_search():
             print(f"   🔹 {len(results)} sonuç geldi, analiz ediliyor...")
             
             for item in results:
-                # print(f"   👀 Okunuyor: {item['title'][:40]}...") # Kalabalık yapmasın diye kapattım
                 events = extract_events_with_ai(item['content'], item['url'])
                 if events: found.extend(events)
-                time.sleep(1)
+                time.sleep(30) # rate limiti korumak için
         except Exception as e:
             print(f"❌ Tavily Hatası: {e}")
     return found
@@ -151,7 +150,7 @@ def run_agent():
         unique_id = f"{title}_{e_date}"
 
         # 1. TEKRAR KONTROLLERİ
-        # A) Bu çalışmada zaten buldum mu? (Mükerrer kaynak)
+        # A) Bu çalışmada zaten buldum mu?
         if title in processed_titles_in_this_run: 
             continue
         
@@ -160,7 +159,7 @@ def run_agent():
             # print(f"   ♻️ Zaten gönderildi: {title}")
             continue
 
-        # 2. KONUM KONTROLÜ (Sadece İstanbul - Online İstemiyoruz)
+        # 2. KONUM KONTROLÜ (Sadece İstanbul. Online istemiyoruz)
         if "istanbul" not in loc:
             continue
 
