@@ -111,9 +111,6 @@ Bu projeyi kendi GitHub hesabınızda otomatize etmek için:
 
 Hata bildirimleri ve Pull Request'ler memnuniyetle karşılanır. Büyük değişiklikler için önce bir Issue açarak tartışmanızı öneririm.
 
-## 📝 Lisans
-
-Bu proje [MIT License](https://www.google.com/search?q=LICENSE) altında lisanslanmıştır.
 
 ---
 
